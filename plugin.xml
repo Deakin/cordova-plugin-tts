@@ -48,11 +48,11 @@
   <platform name="android">
     <config-file target="config.xml" parent="/*">
       <feature name="TTS">
-        <param name="android-package" value="com.kanayo.cordova.tts.TTS" />
+        <param name="android-package" value="com.kanayo.tts.TTS" />
         <param name="onload" value="true" />
       </feature>
     </config-file>
 
-    <source-file src="src/android/TTS.java" target-dir="src/com/kanayo/cordova/tts" />
+    <source-file src="src/android/TTS.java" target-dir="src/com/kanayo/tts" />
   </platform>
 </plugin>

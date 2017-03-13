@@ -1,4 +1,4 @@
-package com.kanayo.cordova.tts;
+package com.kanayo.tts;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
