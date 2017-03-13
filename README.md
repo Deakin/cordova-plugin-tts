@@ -29,7 +29,7 @@ document.addEventListener('deviceready', function () {
             text: 'hello, world!',
             locale: 'en-GB',
             rate: 0.75,
-            addToQueue: false
+            preDelay: 1000
         }, function () {
             alert('success');
         }, function (reason) {
@@ -38,31 +38,33 @@ document.addEventListener('deviceready', function () {
 }, false);
 ```
 
-**Tips:** `speak` an empty string to interrupt.
 
 ## API Definitions
 
 The `onfulfilled` callback will be called when the speech finishes,
-and the `onrejected` callback (Windows Phone only) will be called when an error occurs.
+and the `onrejected` callback will be called when an error occurs.
 
-If the API is invoked when it's still speaking, the previous speaking will be canceled immediately,
-but the `onfulfilled` callback of the previous speaking will be called when it stops.
+speak() adds an utterence to a queue and returns immediately. 
+
+To interurupt and flush the queue, call stop()
 
 ```typescript
 declare module TTS {
     interface IOptions {
         /** text to speak */
         text: string;
-        /** a string like 'en-US', 'zh-CN', etc */
+        /** a string like 'en-US', 'zh-CN', etc (default: en-US)*/
         locale?: string;
-        /** speed rate, 0 ~ 1 */
+        /** speed rate, 0 ~ 1 (default: 1)*/
         rate?: number;
-        /** add to queue or clear queue (default: false) **/
-        addToQueue?: boolean;
+        /** ms delay before utterance (default: 0) **/
+        preDelay?: number;
+        /** ms delay after utterance (default: 0)**/
+        postDelay?: number;
     }
 
     function speak(options: IOptions, onfulfilled: () => void, onrejected: (reason) => void): void;
     function speak(text: string, onfulfilled: () => void, onrejected: (reason) => void): void;
-    function pause(durationInMs: long, onfulfilled: () => void, onrejected: (reason) => void): void;
+    function stop(): void;
 }
 ```

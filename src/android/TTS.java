@@ -68,28 +68,25 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
             throws JSONException {
 
-
-        if (tts == null) {
-            callbackContext.error(ERR_ERROR_INITIALIZING);
-            return true;
-        }
-
-        if (!ttsInitialized) {
-            callbackContext.error(ERR_NOT_INITIALIZED);
-            return true;
-        }
-
-        if (action.equals("speak")) {
-            speak(args, callbackContext);
-        } else if (action.equals("stop")) {
-            stop(args, callbackContext);
-        } else if (action.equals("pause")) {
-            pause(args, callbackContext);
-        } else {
-            return false;
-        }
-
+      if (tts == null) {
+        callbackContext.error(ERR_ERROR_INITIALIZING);
         return true;
+      }
+
+      if (!ttsInitialized) {
+        callbackContext.error(ERR_NOT_INITIALIZED);
+        return true;
+      }
+
+      if (action.equals("speak")) {
+          speak(args, callbackContext);
+      } else if (action.equals("stop")) {
+          stop(args, callbackContext);
+      } else {
+          return false;
+      }
+
+      return true;
     }
 
     @Override
@@ -122,7 +119,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         String text;
         String locale;
         double rate;
-        boolean addToQueue;
+        long preDelay;
+        long postDelay;
 
         if (params.isNull("text")) {
             callbackContext.error(ERR_INVALID_OPTIONS);
@@ -143,28 +141,33 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             rate = params.getDouble("rate");
         }
 
-        if (params.isNull("addToQueue")) {
-            addToQueue = false;
+        if (params.isNull("preDelay")) {
+            preDelay = 0;
         } else {
-            addToQueue = params.getBoolean("addToQueue");
+            preDelay = params.getLong("preDelay");
+        }
+
+        if (params.isNull("postDelay")) {
+            postDelay = 0;
+        } else {
+            postDelay = params.getLong("postDelay");
         }
 
         String[] localeArgs = locale.split("-");
         tts.setLanguage(new Locale(localeArgs[0], localeArgs[1]));
         tts.setSpeechRate((float) rate);
 
-        int queueParam = addToQueue ? TextToSpeech.QUEUE_ADD : TextToSpeech.QUEUE_FLUSH;
+        if( preDelay > 0 ) {
+          tts.playSilentUtterance(preDelay, TextToSpeech.QUEUE_ADD, callbackContext.getCallbackId());
+        }
 
-        tts.speak(text, queueParam, null, callbackContext.getCallbackId());
+        tts.speak(text, TextToSpeech.QUEUE_ADD, null, callbackContext.getCallbackId());
+        
+        if( postDelay > 0 ) {
+          tts.playSilentUtterance(postDelay, TextToSpeech.QUEUE_ADD, callbackContext.getCallbackId());
+        }
+
 
     }
 
-
-
-    private void pause(JSONArray args, CallbackContext callbackContext)
-            throws JSONException, NullPointerException {
-
-        long durationInMs = args.getLong(0);
-        tts.playSilentUtterance(durationInMs, TextToSpeech.QUEUE_ADD, callbackContext.getCallbackId());
-    }
 }

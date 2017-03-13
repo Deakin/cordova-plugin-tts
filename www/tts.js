@@ -23,8 +23,8 @@
       exec(resolved, rejected, "TTS", "speak", [options]);
     },
 
-    pause: function(duration, resolved, rejected) {
-      exec(resolved, rejected, "TTS", "pause", [duration]);
+    stop: function() {
+      exec(null, null, "TTS", "stop", []);
     },
   }
 
