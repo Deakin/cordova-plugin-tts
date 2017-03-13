@@ -18,19 +18,18 @@ cordova plugin add cordova-plugin-tts
 // make sure your the code gets executed only after `deviceready`.
 document.addEventListener('deviceready', function () {
     // basic usage
-    TTS
-        .speak('hello, world!', function () {
+    TTS.speak('hello, world!', function () {
             alert('success');
         }, function (reason) {
             alert(reason);
         });
     
     // or with more options
-    TTS
-        .speak({
+    TTS.speak({
             text: 'hello, world!',
             locale: 'en-GB',
-            rate: 0.75
+            rate: 0.75,
+            addToQueue: false
         }, function () {
             alert('success');
         }, function (reason) {
@@ -58,9 +57,12 @@ declare module TTS {
         locale?: string;
         /** speed rate, 0 ~ 1 */
         rate?: number;
+        /** add to queue or clear queue (default: false) **/
+        addToQueue?: boolean;
     }
 
     function speak(options: IOptions, onfulfilled: () => void, onrejected: (reason) => void): void;
     function speak(text: string, onfulfilled: () => void, onrejected: (reason) => void): void;
+    function pause(durationInMs: long, onfulfilled: () => void, onrejected: (reason) => void): void;
 }
 ```

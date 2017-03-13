@@ -1,6 +1,10 @@
+cordova.define("cordova-plugin-tts.tts", function(require, exports, module) {
 /*
 
     Cordova Text-to-Speech Plugin
+    https://github.com/kanayo/cordova-plugin-tts
+    
+    Based on:
     https://github.com/vilic/cordova-plugin-tts
 
     by VILIC VANE
@@ -10,27 +14,18 @@
 
 */
 
-exports.speak = function (text, onfulfilled, onrejected) {
-    var options = {};
+  var exec = require('cordova/exec');
 
-    if (typeof text == 'string') {
-        options.text = text;
-    } else {
-        options = text;
-    }
 
-    cordova
-        .exec(function () {
-            onfulfilled();
-        }, function (reason) {
-            onrejected(reason);
-        }, 'TTS', 'speak', [options]);
-};
+  module.exports = {
 
-exports.stop = function(onfulfilled, onrejected) {
-    cordova.exec(function () {
-        onfulfilled();
-    }, function(reason) {
-        onrejected(reason);
-     }, 'TTS', 'stop', []);
-};
+    speak: function(param, resolved, rejected) {
+      var options = (typeof param === "string" ? {text: param} : param);
+      exec(resolved, rejected, "TTS", "speak", [options]);
+    },
+
+    pause: function(duration, resolved, rejected) {
+      exec(resolved, rejected, "TTS", "pause", [duration]);
+    },
+  }
+});

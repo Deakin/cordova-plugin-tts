@@ -1,4 +1,4 @@
-package com.wordsbaking.cordova.tts;
+package com.kanayo.cordova.tts;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -67,13 +67,28 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
             throws JSONException {
+
+
+        if (tts == null) {
+            callbackContext.error(ERR_ERROR_INITIALIZING);
+            return true;
+        }
+
+        if (!ttsInitialized) {
+            callbackContext.error(ERR_NOT_INITIALIZED);
+            return true;
+        }
+
         if (action.equals("speak")) {
             speak(args, callbackContext);
         } else if (action.equals("stop")) {
             stop(args, callbackContext);
+        } else if (action.equals("pause")) {
+            pause(args, callbackContext);
         } else {
             return false;
         }
+
         return true;
     }
 
@@ -83,10 +98,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             tts = null;
         } else {
             // warm up the tts engine with an empty string
-            HashMap<String, String> ttsParams = new HashMap<String, String>();
-            ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
             tts.setLanguage(new Locale("en", "US"));
-            tts.speak("", TextToSpeech.QUEUE_FLUSH, ttsParams);
+            tts.speak("", TextToSpeech.QUEUE_FLUSH, null, "");
 
             ttsInitialized = true;
         }
@@ -109,6 +122,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         String text;
         String locale;
         double rate;
+        boolean addToQueue;
 
         if (params.isNull("text")) {
             callbackContext.error(ERR_INVALID_OPTIONS);
@@ -129,23 +143,28 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             rate = params.getDouble("rate");
         }
 
-        if (tts == null) {
-            callbackContext.error(ERR_ERROR_INITIALIZING);
-            return;
+        if (params.isNull("addToQueue")) {
+            addToQueue = false;
+        } else {
+            addToQueue = params.getBoolean("addToQueue");
         }
-
-        if (!ttsInitialized) {
-            callbackContext.error(ERR_NOT_INITIALIZED);
-            return;
-        }
-
-        HashMap<String, String> ttsParams = new HashMap<String, String>();
-        ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackContext.getCallbackId());
 
         String[] localeArgs = locale.split("-");
         tts.setLanguage(new Locale(localeArgs[0], localeArgs[1]));
         tts.setSpeechRate((float) rate);
 
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);
+        int queueParam = addToQueue ? TextToSpeech.QUEUE_ADD : TextToSpeech.QUEUE_FLUSH;
+
+        tts.speak(text, queueParam, null, callbackContext.getCallbackId());
+
+    }
+
+
+
+    private void pause(JSONArray args, CallbackContext callbackContext)
+            throws JSONException, NullPointerException {
+
+        long durationInMs = args.getLong(0);
+        tts.playSilentUtterance(durationInMs, TextToSpeech.QUEUE_ADD, callbackContext.getCallbackId());
     }
 }
