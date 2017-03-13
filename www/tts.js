@@ -1,4 +1,4 @@
-cordova.define("cordova-plugin-tts.tts", function(require, exports, module) {
+cordova.define("kanayo-cordova-plugin-tts.tts", function(require, exports, module) {
 /*
 
     Cordova Text-to-Speech Plugin
