@@ -1,4 +1,3 @@
-cordova.define("kanayo-cordova-plugin-tts.tts", function(require, exports, module) {
 /*
 
     Cordova Text-to-Speech Plugin
@@ -28,4 +27,4 @@ cordova.define("kanayo-cordova-plugin-tts.tts", function(require, exports, modul
       exec(resolved, rejected, "TTS", "pause", [duration]);
     },
   }
-});
+
