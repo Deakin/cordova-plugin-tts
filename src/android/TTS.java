@@ -96,7 +96,11 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         } else {
             // warm up the tts engine with an empty string
             tts.setLanguage(new Locale("en", "US"));
-            tts.speak("", TextToSpeech.QUEUE_FLUSH, null, "");
+
+            HashMap<String, String> ttsParams = new HashMap<String, String>();
+            ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "");
+
+            tts.speak("", TextToSpeech.QUEUE_FLUSH, ttsParams);
 
             ttsInitialized = true;
         }
@@ -157,14 +161,17 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         tts.setLanguage(new Locale(localeArgs[0], localeArgs[1]));
         tts.setSpeechRate((float) rate);
 
+        HashMap<String, String> ttsParams = new HashMap<String, String>();
+        ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, callbackContext.getCallbackId());
+
         if( preDelay > 0 ) {
-          tts.playSilentUtterance(preDelay, TextToSpeech.QUEUE_ADD, callbackContext.getCallbackId());
+          tts.playSilence(preDelay, TextToSpeech.QUEUE_ADD, ttsParams);
         }
 
-        tts.speak(text, TextToSpeech.QUEUE_ADD, null, callbackContext.getCallbackId());
+        tts.speak(text, TextToSpeech.QUEUE_ADD, ttsParams );
         
         if( postDelay > 0 ) {
-          tts.playSilentUtterance(postDelay, TextToSpeech.QUEUE_ADD, callbackContext.getCallbackId());
+        	tts.playSilence(postDelay, TextToSpeech.QUEUE_ADD, ttsParams);
         }
 
 
