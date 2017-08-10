@@ -9,7 +9,7 @@ Android 4.0.3+ (API Level 15+)
 ## Installation
 
 ```sh
-cordova plugin add https://github.com/kanayo/cordova-plugin-tts.git
+cordova plugin add https://github.com/Mhitra/cordova-plugin-tts.git
 ```
 
 ## Usage
@@ -17,24 +17,12 @@ cordova plugin add https://github.com/kanayo/cordova-plugin-tts.git
 ```javascript
 // make sure your the code gets executed only after `deviceready`.
 document.addEventListener('deviceready', function () {
-    // basic usage
-    TTS.speak('hello, world!', function () {
-            alert('success');
-        }, function (reason) {
-            alert(reason);
-        });
-    
-    // or with more options
-    TTS.speak({
-            text: 'hello, world!',
-            locale: 'en-GB',
-            rate: 0.75,
-            preDelay: 1000
-        }, function () {
-            alert('success');
-        }, function (reason) {
-            alert(reason);
-        });
+    var options = { text: 'Hello World!', locale: 'en-AU', rate: 0.75 };
+    $window.TTS.speak(options, function (success) {
+        logService.log('TTS::speak::success:', success);
+    }, function (error) {
+        logService.error('TTS::speak::error:', error);
+    });
 }, false);
 ```
 

@@ -1,11 +1,15 @@
 /*
-    Cordova Text-to-Speech Plugin
-    https://github.com/vilic/cordova-plugin-tts
+Cordova Text-to-Speech Plugin
+https://github.com/Mhitra/cordova-plugin-tts
 
-    by VILIC VANE
-    https://github.com/vilic
+by VILIC VANE
+https://github.com/vilic
 
-    MIT License
+Forked from:
+https://github.com/kanayo/cordova-plugin-tts
+https://github.com/chemerisuk/cordova-plugin-tts
+
+MIT License
 */
 
 #import <Cordova/CDV.h>

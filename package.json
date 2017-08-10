@@ -1,18 +1,17 @@
 {
-  "name": "kanayo-cordova-plugin-tts",
-  "version": "0.2.3",
+  "name": "mhitra-cordova-plugin-tts",
+  "version": "0.0.1",
   "description": "Cordova Text-to-Speech Plugin",
   "cordova": {
-    "id": "kanayo-cordova-plugin-tts",
+    "id": "mhitra-cordova-plugin-tts",
     "platforms": [
       "ios",
-      "wp8",
       "android"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kanayo/cordova-plugin-tts.git"
+    "url": "git+https://github.com/Mhitra/cordova-plugin-tts.git"
   },
   "keywords": [
     "cordova",
@@ -20,13 +19,12 @@
     "text-to-speech",
     "ecosystem:cordova",
     "cordova-ios",
-    "cordova-wp8",
     "cordova-android"
   ],
   "author": "VILIC VANE",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kanayo/cordova-plugin-tts/issues"
+    "url": "https://github.com/Mhitra/cordova-plugin-tts/issues"
   },
-  "homepage": "https://github.com/kanayo/cordova-plugin-tts#readme"
+  "homepage": "https://github.com/Mhitra/cordova-plugin-tts#readme"
 }

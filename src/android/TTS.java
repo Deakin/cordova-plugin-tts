@@ -1,4 +1,4 @@
-package com.kanayo.tts;
+package com.mhitra.tts;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -18,13 +18,17 @@ import java.util.HashMap;
 import java.util.Locale;
 
 /*
-    Cordova Text-to-Speech Plugin
-    https://github.com/vilic/cordova-plugin-tts
+Cordova Text-to-Speech Plugin
+https://github.com/Mhitra/cordova-plugin-tts
 
-    by VILIC VANE
-    https://github.com/vilic
+by VILIC VANE
+https://github.com/vilic
 
-    MIT License
+Forked from:
+https://github.com/kanayo/cordova-plugin-tts
+https://github.com/chemerisuk/cordova-plugin-tts
+
+MIT License
 */
 
 public class TTS extends CordovaPlugin implements OnInitListener {
