@@ -1,4 +1,4 @@
-package com.mhitra.tts;
+package au.com.deakin.tts;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -19,7 +19,7 @@ import java.util.Locale;
 
 /*
 Cordova Text-to-Speech Plugin
-https://github.com/Mhitra/cordova-plugin-tts
+https://github.com/Deakin/cordova-plugin-tts
 
 by VILIC VANE
 https://github.com/vilic

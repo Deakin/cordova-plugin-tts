@@ -9,7 +9,7 @@ Android 4.0.3+ (API Level 15+)
 ## Installation
 
 ```sh
-cordova plugin add https://github.com/Mhitra/cordova-plugin-tts.git
+cordova plugin add https://github.com/Deakin/cordova-plugin-tts.git
 ```
 
 ## Usage

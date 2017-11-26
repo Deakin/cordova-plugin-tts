@@ -1,6 +1,6 @@
 /*
 Cordova Text-to-Speech Plugin
-https://github.com/Mhitra/cordova-plugin-tts
+https://github.com/Deakin/cordova-plugin-tts
 
 by VILIC VANE
 https://github.com/vilic
